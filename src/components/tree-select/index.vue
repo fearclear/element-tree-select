@@ -2,10 +2,32 @@
   <div class="wrap">
     <el-select
       ref="select"
+      :id="id"
+      :name="name"
+      :auto-complete="autocomplete"
+      :automatic-dropdown="automaticDropdown"
       :multiple="multiple"
       :filterable="filterable"
       :value="value"
       :popper-append-to-body="false"
+      :size="size"
+      :disabled="disabled"
+      :clearable="clearable"
+      :allow-create="allowCreate"
+      :loading="loading"
+      :popper-class="popperClass"
+      :remote="remote"
+      :loading-text="loadingText"
+      :no-match-text="noMatchText"
+      :no-data-text="noDataText"
+      :remote-method="remoteMethod"
+      :filter-method="filterMethod"
+      :multiple-limit="multipleLimit"
+      :placeholder="placeholder"
+      :default-first-option="defaultFirstOption"
+      :reserve-keyword="reserveKeyword"
+      :value-key="valueKey"
+      :collapse-tags="collapseTags"
       @visible-change="visibleChange"
     >
       <el-popover
@@ -33,11 +55,31 @@
       >
         <el-tree
           :data="data"
+          :empty-text="emptyText"
+          :redner-after-expand="renderAfterExpand"
+          :check-strictly="checkStrictly"
           :show-checkbox="multiple"
           :node-key="nodeKey"
           :default-expanded-keys="defaultExpandedKeys"
           :default-expand-all="defaultExpandAll"
           :default-checked-keys="defaultCheckedKeys"
+          :expand-on-click-node="expandOnClickNode"
+          :check-on-click-node="checkOnClickNode"
+          :check-descendants="checkDescendants"
+          :auto-expand-parent="autoExpandParent"
+          :current-node-key="currentNodeKey"
+          :render-content="renderContent"
+          :draggable="draggable"
+          :allow-drag="allowDrag"
+          :allow-drop="allowDrop"
+          :props="props"
+          :lazy="lazy"
+          :highlight-current="highlightCurrent"
+          :load="load"
+          :filter-node-method="filterNodeMethod"
+          :accordion="accordion"
+          :indent="indent"
+          :icon-class="iconClass"
         />
       </el-popover>
     </el-select>
@@ -93,7 +135,7 @@ export default class TreeSelect extends TreeSelectProps {
       display: none;
     }
   }
-  .el-tree-select-popover {
+  .el-popover {
     box-sizing: border-box;
   }
 }

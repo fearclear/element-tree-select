@@ -6,6 +6,7 @@
       :default-checked-keys="[1]"
       v-model="tt"
       node-key="id"
+      placeholder="请选择你要选择的选项"
     ></j-el-tree-select>
   </div>
 </template>
