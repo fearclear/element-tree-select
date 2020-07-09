@@ -15,7 +15,14 @@ module.exports = {
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    '@typescript-eslint/ban-ts-ignore': 'off',
+    indent: ['error', 2],
+    'vue/max-attributes-per-line': 'error',
+    'vue/html-indent': 'error',
+    'vue/no-multi-spaces': 'error',
+    'vue/static-class-names-order': 'error',
+    'vue/v-on-function-call': 'error'
   },
   overrides: [
     {
