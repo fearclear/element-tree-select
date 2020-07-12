@@ -1,11 +1,10 @@
 <template>
   <div class="wrap">
     <j-el-tree-select
-      :multiple="true"
       :data="options"
       :default-checked-keys="[1]"
-      v-model="tt"
       node-key="id"
+      v-model="tt"
       placeholder="请选择你要选择的选项"
     ></j-el-tree-select>
   </div>
@@ -21,7 +20,7 @@ export default Vue.extend({
   props: {},
   data () {
     return {
-      tt: '',
+      tt: 9,
       options: [
         {
           id: 1,
@@ -33,11 +32,13 @@ export default Vue.extend({
               children: [
                 {
                   id: 9,
-                  label: '三级 1-1-1'
+                  label: '三级 1-1-1',
+                  choose: true
                 },
                 {
                   id: 10,
-                  label: '三级 1-1-2'
+                  label: '三级 1-1-2',
+                  choose: true
                 }
               ]
             }
@@ -49,11 +50,13 @@ export default Vue.extend({
           children: [
             {
               id: 5,
-              label: '二级 2-1'
+              label: '二级 2-1',
+              choose: true
             },
             {
               id: 6,
-              label: '二级 2-2'
+              label: '二级 2-2',
+              choose: true
             }
           ]
         },
@@ -63,15 +66,27 @@ export default Vue.extend({
           children: [
             {
               id: 7,
-              label: '二级 3-1'
+              label: '二级 3-1',
+              choose: true
             },
             {
               id: 8,
-              label: '二级 3-2'
+              label: '二级 3-2',
+              choose: true
             }
           ]
         }
       ]
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.tt = 5
+    }, 2000)
+  },
+  watch: {
+    tt: (o, v) => {
+      console.log(o, v)
     }
   }
 })

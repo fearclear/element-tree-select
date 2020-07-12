@@ -8,7 +8,7 @@
       :automatic-dropdown="automaticDropdown"
       :multiple="multiple"
       :filterable="filterable"
-      :value="value"
+      :value="selectData.label"
       :popper-append-to-body="false"
       :size="size"
       :disabled="disabled"
@@ -80,6 +80,8 @@
           :accordion="accordion"
           :indent="indent"
           :icon-class="iconClass"
+          @node-click="handleNodeClick"
+          @check-change="handleCheckChange"
         />
       </el-popover>
     </el-select>
@@ -90,9 +92,29 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import props from './mixin'
+import { treeToArray, Collection } from './util'
 const TreeSelectProps = Vue.extend({
   props: {
-    ...props
+    ...props,
+    cc: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    allList () {
+      return treeToArray(this.data as Collection[])
+    }
+  },
+  watch: {
+    value (value) {
+      const item = this.allList.find(item => item.id === value)
+      console.log(item, 'item')
+      this.selectData = {
+        value: item.id,
+        label: item.label
+      }
+    }
   }
 })
 
@@ -100,28 +122,45 @@ const TreeSelectProps = Vue.extend({
   name: 'j-el-tree-select'
 })
 export default class TreeSelect extends TreeSelectProps {
-  $refs!: {
-    select: Vue;
-  };
+  private selectData = {
+    value: null,
+    label: ''
+  }
 
   private popoverVisible = false;
   private width = 200;
   private left = 0;
 
   private resize () {
-    console.log('resize')
-    this.width = (this.$refs.select?.$el as HTMLSelectElement)?.offsetWidth
-    this.left = (this.$refs.select?.$el as HTMLSelectElement)?.offsetLeft
+    this.width = ((this.$refs.select as Vue)
+      ?.$el as HTMLSelectElement)?.offsetWidth
+    this.left = ((this.$refs.select as Vue)
+      ?.$el as HTMLSelectElement)?.offsetLeft
   }
 
   private visibleChange (visible: boolean) {
-    console.log(this.popoverVisible, visible)
     this.popoverVisible = visible
   }
 
   created () {
     console.log(this.$props)
+    console.log(this.multiple)
+    console.log(treeToArray(this.data as Collection[]))
   }
+
+  handleNodeClick (data: any) {
+    if (!this.multiple && data.choose) {
+      this.selectData = {
+        value: data.id,
+        label: data.label
+      }
+      this.$emit('change', data.id)
+      this.$emit('input', data.id);
+      (this.$refs.select as HTMLSelectElement).blur()
+    }
+  }
+
+  handleCheckChange () {}
 }
 </script>
 
