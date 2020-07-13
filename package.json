@@ -1,7 +1,10 @@
 {
   "name": "@fearcleari/element-tree-select",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "main": "lib/tree-select.umd.min.js",
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -11,7 +14,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@types/clone": "^0.1.30",
     "clone": "^2.1.2",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
+    "@types/clone": "^0.1.30",
     "@types/mocha": "^5.2.4",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
