@@ -84,7 +84,16 @@
           :icon-class="iconClass"
           @node-click="handleNodeClick"
           @check-change="handleCheckChange"
-        />
+        >
+          <span
+            slot-scope="{ node, data }"
+            class="custom-tree-node">
+            <span :class="{disableChoose: disableChoose(data)}">{{ node.label }}</span>
+            <span
+              v-if="showCount"
+              class="count">{{ getCount(data) }}</span>
+          </span>
+        </el-tree>
       </el-popover>
     </el-select>
   </div>
@@ -222,6 +231,26 @@ export default class TreeSelect extends TreeSelectProps {
     }
   }
 
+  disableChoose (data: any) {
+    return !data.choose && !data.children?.length
+  }
+
+  getCount (data: any) {
+    try {
+      if (data.children?.length) {
+        return `(${data.children?.length})`
+      } else {
+        return ''
+      }
+    } catch (e) {
+      if (data.children?.length) {
+        return `(${data.children.length})`
+      } else {
+        return ''
+      }
+    }
+  }
+
   emit (value: SelectData['value']) {
     this.$emit('change', value)
     this.$emit('input', value)
@@ -231,6 +260,7 @@ export default class TreeSelect extends TreeSelectProps {
 
 <style lang="less">
 .wrap {
+  user-select: none;
   .el-select-dropdown {
     margin-top: 0;
     border: none;
@@ -241,6 +271,16 @@ export default class TreeSelect extends TreeSelectProps {
   }
   .el-popover {
     box-sizing: border-box;
+    top: 1px;
   }
+
+  .disableChoose {
+    color: #d2d2d2;
+  }
+
+  .count {
+    margin-left: 5px;
+  }
+
 }
 </style>

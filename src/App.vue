@@ -5,6 +5,7 @@
       node-key="id"
       v-model="tt"
       placeholder="请选择你要选择的选项"
+      :multiple="true"
     ></tree-select>
   </div>
 </template>
@@ -19,7 +20,7 @@ export default Vue.extend({
   props: {},
   data () {
     return {
-      tt: 9,
+      tt: [9],
       options: [
         {
           id: 1,
@@ -74,13 +75,17 @@ export default Vue.extend({
               choose: true
             }
           ]
+        }, {
+          id: 11,
+          label: '一级 4',
+          children: []
         }
       ]
     }
   },
   mounted () {
     setTimeout(() => {
-      this.tt = 8
+      this.tt = [8]
     }, 2000)
   },
   watch: {

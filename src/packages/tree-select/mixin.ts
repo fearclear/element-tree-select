@@ -153,5 +153,6 @@ const popoverProps = {
 export default {
   ...selectProps,
   ...popoverProps,
-  ...treeProps
+  ...treeProps,
+  showCount: Boolean
 }
