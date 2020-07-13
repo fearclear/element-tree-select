@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import JElTreeSelect from '@/components/tree-select/index.vue'
+import JElTreeSelect from '@/packages/tree-select/index.vue'
 export default Vue.extend({
   components: {
     JElTreeSelect

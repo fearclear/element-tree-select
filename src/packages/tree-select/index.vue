@@ -97,6 +97,7 @@ import { Watch } from 'vue-property-decorator'
 import props from './mixin'
 import { treeToArray, isArrayString } from './util'
 import { SelectData, TreeSelectData } from './type'
+import { Select, Popover, Tree, Option } from 'element-ui'
 const TreeSelectProps = Vue.extend({
   props: {
     ...props
@@ -104,7 +105,13 @@ const TreeSelectProps = Vue.extend({
 })
 
 @Component({
-  name: 'j-el-tree-select'
+  name: 'j-el-tree-select',
+  components: {
+    [Select.name]: Select,
+    [Popover.name]: Popover,
+    [Tree.name]: Tree,
+    [Option.name]: Option
+  }
 })
 export default class TreeSelect extends TreeSelectProps {
   $refs!: Vue['$refs'] & {
