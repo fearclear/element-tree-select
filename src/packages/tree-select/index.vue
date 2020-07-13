@@ -105,7 +105,7 @@ const TreeSelectProps = Vue.extend({
 })
 
 @Component({
-  name: 'j-el-tree-select',
+  name: 'tree-select',
   components: {
     [Select.name]: Select,
     [Popover.name]: Popover,

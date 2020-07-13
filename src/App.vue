@@ -1,21 +1,21 @@
 <template>
   <div class="wrap">
-    <j-el-tree-select
+    <tree-select
       :data="options"
       node-key="id"
       v-model="tt"
       :multiple="true"
       placeholder="请选择你要选择的选项"
-    ></j-el-tree-select>
+    ></tree-select>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import JElTreeSelect from '@/packages/tree-select/index.vue'
+import TreeSelect from '@/packages/tree-select/index.vue'
 export default Vue.extend({
   components: {
-    JElTreeSelect
+    TreeSelect
   },
   props: {},
   data () {
