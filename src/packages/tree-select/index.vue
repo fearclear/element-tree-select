@@ -142,6 +142,9 @@ export default class TreeSelect extends TreeSelectProps {
 
   private visibleChange (visible: boolean) {
     this.popoverVisible = visible
+    if (visible) {
+      this.$refs.tree.filter('')
+    }
   }
 
   get allList () {
