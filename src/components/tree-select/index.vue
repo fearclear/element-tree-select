@@ -29,6 +29,7 @@
       :value-key="valueKey"
       :collapse-tags="collapseTags"
       @visible-change="visibleChange"
+      @remove-tag="removeTag"
     >
       <el-popover
         slot="empty"
@@ -54,6 +55,7 @@
         @show="resize"
       >
         <el-tree
+          ref="tree"
           :data="data"
           :empty-text="emptyText"
           :redner-after-expand="renderAfterExpand"
@@ -91,30 +93,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import { Watch } from 'vue-property-decorator'
 import props from './mixin'
-import { treeToArray, Collection } from './util'
+import { treeToArray, isArrayString } from './util'
+import { SelectData, TreeSelectData } from './type'
 const TreeSelectProps = Vue.extend({
   props: {
-    ...props,
-    cc: {
-      type: String,
-      default: ''
-    }
-  },
-  computed: {
-    allList () {
-      return treeToArray(this.data as Collection[])
-    }
-  },
-  watch: {
-    value (value) {
-      const item = this.allList.find(item => item.id === value)
-      console.log(item, 'item')
-      this.selectData = {
-        value: item.id,
-        label: item.label
-      }
-    }
+    ...props
   }
 })
 
@@ -122,45 +107,115 @@ const TreeSelectProps = Vue.extend({
   name: 'j-el-tree-select'
 })
 export default class TreeSelect extends TreeSelectProps {
-  private selectData = {
-    value: null,
+  $refs!: Vue['$refs'] & {
+    select: {
+      $el: HTMLSelectElement;
+      blur: Function;
+    };
+    tree: {
+      setCheckedKeys: Function;
+      getCheckedNodes: (type: boolean) => TreeSelectData[];
+      filter: (value: string) => {};
+    };
+  };
+
+  private selectData: SelectData = {
+    value: undefined,
     label: ''
-  }
+  };
 
   private popoverVisible = false;
   private width = 200;
   private left = 0;
 
   private resize () {
-    this.width = ((this.$refs.select as Vue)
-      ?.$el as HTMLSelectElement)?.offsetWidth
-    this.left = ((this.$refs.select as Vue)
-      ?.$el as HTMLSelectElement)?.offsetLeft
+    this.width = this.$refs.select?.$el?.offsetWidth
+    this.left = this.$refs.select?.$el?.offsetLeft
   }
 
   private visibleChange (visible: boolean) {
     this.popoverVisible = visible
   }
 
-  created () {
-    console.log(this.$props)
-    console.log(this.multiple)
-    console.log(treeToArray(this.data as Collection[]))
+  get allList () {
+    return treeToArray(this.data)
   }
 
-  handleNodeClick (data: any) {
-    if (!this.multiple && data.choose) {
+  @Watch('selectData')
+  onSelectedDataChange (data: SelectData) {
+    this.emit(data.value)
+  }
+
+  @Watch('value')
+  onValueChange (value: SelectData['value']) {
+    this.checkValue(value)
+  }
+
+  mounted () {
+    this.checkValue(this.$props.value)
+  }
+
+  checkValue (value: SelectData['value']) {
+    if (this.multiple) {
+      this.$refs.tree.setCheckedKeys(value)
+    } else {
+      const item = this.allList.find(item => item.id === value)
       this.selectData = {
-        value: data.id,
-        label: data.label
+        value: item.id,
+        label: item.label
       }
-      this.$emit('change', data.id)
-      this.$emit('input', data.id);
-      (this.$refs.select as HTMLSelectElement).blur()
     }
   }
 
-  handleCheckChange () {}
+  handleNodeClick (data: TreeSelectData) {
+    if (!this.multiple && data.choose) {
+      this.selectData = {
+        value: data.id,
+        label: data.label || ''
+      }
+      this.$refs.select.blur()
+    }
+  }
+
+  handleCheckChange () {
+    const data = this.$refs.tree.getCheckedNodes(true)
+    this.selectData = {
+      label: data.reduce((results: string[], item) => {
+        if (item.label) {
+          return [...results, item.label]
+        }
+        return results
+      }, []),
+      value: data.map(item => item.id)
+    }
+  }
+
+  filterMethod (value: string) {
+    this.$refs.tree.filter(value)
+  }
+
+  filterNodeMethod (value: string, data: TreeSelectData) {
+    if (!value) return true
+    return data.label?.indexOf(value) !== -1
+  }
+
+  removeTag (value: SelectData['label']) {
+    if (isArrayString(this.selectData.label)) {
+      const index = this.selectData.label?.findIndex(
+        (item: string) => item === value
+      )
+      this.selectData.label.splice(index, 1)
+      if (isArrayString(this.selectData.value)) {
+        this.selectData.value?.splice(index, 1)
+      }
+      this.$refs.tree.setCheckedKeys(this.selectData.value)
+    }
+  }
+
+  emit (value: SelectData['value']) {
+    this.$emit('change', value)
+    this.$emit('input', value)
+  }
 }
 </script>
 

@@ -2,9 +2,9 @@
   <div class="wrap">
     <j-el-tree-select
       :data="options"
-      :default-checked-keys="[1]"
       node-key="id"
       v-model="tt"
+      :multiple="true"
       placeholder="请选择你要选择的选项"
     ></j-el-tree-select>
   </div>
@@ -20,7 +20,7 @@ export default Vue.extend({
   props: {},
   data () {
     return {
-      tt: 9,
+      tt: [9],
       options: [
         {
           id: 1,
@@ -81,7 +81,7 @@ export default Vue.extend({
   },
   mounted () {
     setTimeout(() => {
-      this.tt = 5
+      this.tt = [7, 8]
     }, 2000)
   },
   watch: {

@@ -23,7 +23,8 @@ module.exports = {
     'vue/html-indent': 'error',
     'vue/no-multi-spaces': 'error',
     'vue/static-class-names-order': 'error',
-    'vue/v-on-function-call': 'error'
+    'vue/v-on-function-call': 'error',
+    'chai-friendly/no-unused-expressions': 'off'
   },
   overrides: [
     {
@@ -33,6 +34,9 @@ module.exports = {
       ],
       env: {
         mocha: true
+      },
+      rules: {
+        'chai-friendly/no-unused-expressions': 'error'
       }
     }
   ]

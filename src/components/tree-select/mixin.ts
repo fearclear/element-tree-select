@@ -4,7 +4,7 @@ const treeProps = {
   },
   emptyText: {
     type: String,
-    default: ''
+    default: 'no result'
   },
   renderAfterExpand: {
     type: Boolean,
@@ -55,7 +55,6 @@ const treeProps = {
   },
   highlightCurrent: Boolean,
   load: Function,
-  filterNodeMethod: Function,
   accordion: Boolean,
   indent: {
     type: Number,
@@ -90,7 +89,6 @@ const selectProps = {
   noMatchText: String,
   noDataText: String,
   remoteMethod: Function,
-  filterMethod: Function,
   multiple: Boolean,
   multipleLimit: {
     type: Number,
