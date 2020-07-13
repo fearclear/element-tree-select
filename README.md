@@ -1,34 +1,12 @@
-# element-select-tree
+# 说明
 
-## Project setup
-```
-npm install
-```
+- 本组件基于elementUI开发
+- 用于补充elementUI缺少的treeSelect插件
+- 接收的属性为select/popover/tree三个组件结合起来的属性
+- 对于接收的属性做了一些处理，具体接收的参数在[mixin](src/packages/tree-select/mixin.ts)中
+- 方法没有全部暴露，需要的话可以自行扩展
+- `tests`文件夹里面包含e2e测试和unit测试，e2e基于[cypress](https://www.cypress.io/)，unit测试基于[mocha](https://mochajs.org/)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 补充
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- 只测试了single select，multiple模式未完全测试
