@@ -178,7 +178,7 @@ export default class TreeSelect extends TreeSelectProps {
     if (this.multiple) {
       this.$refs.tree.setCheckedKeys(value)
     } else {
-      const item = this.allList.find(item => item.id === value)
+      const item = this.allList.find(item => item.id === value) || {}
       this.selectData = {
         value: item.id,
         label: item.label
