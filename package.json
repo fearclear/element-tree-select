@@ -1,5 +1,5 @@
 {
-  "name": "element-tree-select",
+  "name": "@fearcleari/element-tree-select",
   "version": "0.1.1",
   "main": "lib/tree-select.umd.min.js",
   "scripts": {
@@ -59,5 +59,6 @@
       "git add"
     ]
   },
-  "readme": "ERROR: No README data found!"
+  "author": "fearclear <fearcleari@gmail.com>",
+  "license": "ISC"
 }
